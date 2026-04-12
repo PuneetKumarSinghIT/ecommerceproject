@@ -1,10 +1,8 @@
 package com.ecommerce.ecommerseproject.controller;
 
 import com.ecommerce.ecommerseproject.models.Product;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.ecommerce.ecommerseproject.service.ProductService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProductController {
@@ -15,8 +13,14 @@ public class ProductController {
 //    3. to update the product
 //    4. to delete the product
 
+//    Need to interact with Service class.
+    private ProductService productService;
 
-//    This will help in creating the product
+    public ProductController(ProductService productService) {
+        this.productService = productService;
+    }
+
+    //    This will help in creating the product
 //    @RequestMapping(value = "/product", method = RequestMethod.POST)
 //    there is short annotation to do the same RequestMapping method work which is PostMapping.
     @PostMapping(value = "/product")
@@ -26,8 +30,10 @@ public class ProductController {
     }
 
 //  This will help in getting the product.
-    public Product getProduct(long id)
+    @GetMapping("/product/{id}")
+    public Product getProduct(@PathVariable("id") long id)
     {
+        productService.getSingleProduct(id);
         return null;
     }
 
