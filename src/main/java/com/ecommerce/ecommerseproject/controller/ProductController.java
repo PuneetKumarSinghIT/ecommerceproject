@@ -33,7 +33,9 @@ public class ProductController {
     @GetMapping("/product/{id}")
     public Product getProduct(@PathVariable("id") long id)
     {
+        System.out.println("Starting the controller to read input");
         productService.getSingleProduct(id);
+        System.out.println("Ending the controller to read input");
         return null;
     }
 
