@@ -1,6 +1,7 @@
 package com.ecommerce.ecommerseproject.service;
 
 import com.ecommerce.ecommerseproject.dto.FakeStoreProductDto;
+import com.ecommerce.ecommerseproject.exceptions.ProductNotFoundException;
 import com.ecommerce.ecommerseproject.models.Product;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -18,13 +19,15 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public Product getSingleProduct(long productId) {
+    public Product getSingleProduct(long productId) throws ProductNotFoundException {
 
         System.out.println("We are running the getSingleProduct service in fakestore");
         FakeStoreProductDto fakestoreproductdto =
                 restTemplate.getForObject("https://fakestoreapi.com/products/" +
                         productId, FakeStoreProductDto.class );
-        assert fakestoreproductdto != null;
+        if (fakestoreproductdto == null){
+            throw new ProductNotFoundException("Product not found"+ productId);
+        }
         return fakestoreproductdto.getProduct();
     }
 
@@ -34,7 +37,18 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public Product createProduct(Product product) {
-        return null;
+    public Product createProduct(long id,  String title, String description, double price, String category, String imageUrl) {
+        FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
+        fakeStoreProductDto.setId(id);
+        fakeStoreProductDto.setTitle(title);
+        fakeStoreProductDto.setDescription(description);
+        fakeStoreProductDto.setPrice(price);
+        fakeStoreProductDto.setCategory(category);
+        fakeStoreProductDto.setImage(imageUrl);
+
+        FakeStoreProductDto response = restTemplate.postForObject("https://fakestoreapi.com/products",
+                fakeStoreProductDto, FakeStoreProductDto.class);
+        assert response != null;
+        return response.getProduct();
     }
 }

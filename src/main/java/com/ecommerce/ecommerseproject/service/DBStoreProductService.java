@@ -17,7 +17,7 @@ public class DBStoreProductService implements ProductService {
     }
 
     @Override
-    public Product createProduct(Product product) {
+    public Product createProduct(long id, String title, String description, double price, String category, String imageUrl) {
         return null;
     }
 }
