@@ -34,9 +34,9 @@ public class ProductController {
     public Product getProduct(@PathVariable("id") long id)
     {
         System.out.println("Starting the controller to read input");
-        productService.getSingleProduct(id);
+        Product p = productService.getSingleProduct(id);
         System.out.println("Ending the controller to read input");
-        return null;
+        return p;
     }
 
 //  This will help to update the product
