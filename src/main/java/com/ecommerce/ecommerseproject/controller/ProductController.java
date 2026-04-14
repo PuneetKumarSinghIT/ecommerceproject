@@ -1,5 +1,7 @@
 package com.ecommerce.ecommerseproject.controller;
 
+import com.ecommerce.ecommerseproject.dto.ErrorDto;
+import com.ecommerce.ecommerseproject.exceptions.ProductNotFoundException;
 import com.ecommerce.ecommerseproject.models.Product;
 import com.ecommerce.ecommerseproject.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -24,14 +26,16 @@ public class ProductController {
 //    @RequestMapping(value = "/product", method = RequestMethod.POST)
 //    there is short annotation to do the same RequestMapping method work which is PostMapping.
     @PostMapping(value = "/product")
-    public void createProduct(Product product)
+    public Product createProduct(@RequestBody Product product) throws ProductNotFoundException
     {
-
+//        System.out.println("imageurl = " + product.getImageUrl());
+        return productService.createProduct(product.getId(), product.getTitle(), product.getDescription(),
+                product.getPrice(), product.getCategory().getTitle(), product.getImageUrl());
     }
 
 //  This will help in getting the product.
     @GetMapping("/product/{id}")
-    public Product getProduct(@PathVariable("id") long id)
+    public Product getProduct(@PathVariable("id") long id) throws  ProductNotFoundException
     {
         System.out.println("Starting the controller to read input");
         Product p = productService.getSingleProduct(id);
@@ -40,6 +44,7 @@ public class ProductController {
     }
 
 //  This will help to update the product
+
     public void updateProduct(Product product)
     {
     }
@@ -49,4 +54,12 @@ public class ProductController {
     {
     }
 
+//    Defining the method to reply back with crisp and clear error message over UI
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ErrorDto handleProductNotFoundException(Exception e)
+    {
+        ErrorDto error = new ErrorDto();
+        error.setMessage(e.getMessage());
+        return error;
+    }
 }
