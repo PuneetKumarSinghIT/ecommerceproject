@@ -4,6 +4,8 @@ import com.ecommerce.ecommerseproject.dto.ErrorDto;
 import com.ecommerce.ecommerseproject.exceptions.ProductNotFoundException;
 import com.ecommerce.ecommerseproject.models.Product;
 import com.ecommerce.ecommerseproject.service.ProductService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,12 +37,15 @@ public class ProductController {
 
 //  This will help in getting the product.
     @GetMapping("/product/{id}")
-    public Product getProduct(@PathVariable("id") long id) throws  ProductNotFoundException
+    public ResponseEntity<Product> getProduct(@PathVariable("id") long id) throws  ProductNotFoundException
     {
         System.out.println("Starting the controller to read input");
         Product p = productService.getSingleProduct(id);
         System.out.println("Ending the controller to read input");
-        return p;
+        ResponseEntity<Product> response = new ResponseEntity<>(
+                p, HttpStatus.OK
+    );
+        return response;
     }
 
 //  This will help to update the product
@@ -56,10 +61,12 @@ public class ProductController {
 
 //    Defining the method to reply back with crisp and clear error message over UI
     @ExceptionHandler(ProductNotFoundException.class)
-    public ErrorDto handleProductNotFoundException(Exception e)
+    public ResponseEntity<ErrorDto> handleProductNotFoundException(Exception e)
     {
         ErrorDto error = new ErrorDto();
         error.setMessage(e.getMessage());
-        return error;
+
+        ResponseEntity<ErrorDto> response = new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+        return response;
     }
 }
