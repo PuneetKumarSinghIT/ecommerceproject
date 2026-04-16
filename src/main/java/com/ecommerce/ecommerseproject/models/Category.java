@@ -1,31 +1,22 @@
 package com.ecommerce.ecommerseproject.models;
 
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-public class Category {
-    private long id;
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+public class Category extends BaseModel {
     private String title;
 
-    public long getId() {
-        return id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Category() {
-    }
-
-    public Category(long id, String title) {
-        this.id = id;
-        this.title = title;
+    @Override
+    public String toString() {
+        return "Category{ title='" + title + '\'' +
+                '}';
     }
 }
