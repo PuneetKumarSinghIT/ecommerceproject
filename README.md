@@ -1,5 +1,5 @@
 # ecommerceproject
-This repo is created for pushing the ecommerce project code to repo.
+This repo is created for pushing the ecommerce project code to repo...
 
 ## Project Architecture
 
