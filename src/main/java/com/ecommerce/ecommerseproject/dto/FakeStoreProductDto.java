@@ -2,11 +2,16 @@ package com.ecommerce.ecommerseproject.dto;
 
 import com.ecommerce.ecommerseproject.models.Category;
 import com.ecommerce.ecommerseproject.models.Product;
+
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class FakeStoreProductDto {
     private long id;
     private String title;
