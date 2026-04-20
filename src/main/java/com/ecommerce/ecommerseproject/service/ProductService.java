@@ -8,5 +8,5 @@ import java.util.List;
 public interface ProductService {
     Product getSingleProduct(long productId) throws ProductNotFoundException;
     List<Product> getAllProducts();
-    Product createProduct(long id, String title, String description, double price, String category, String imageUrl);
+    Product createProduct(long id, String title, String description, double price, String category, String imageUrl) throws ProductNotFoundException;
 }

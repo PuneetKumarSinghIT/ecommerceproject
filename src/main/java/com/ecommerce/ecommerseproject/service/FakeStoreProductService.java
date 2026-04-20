@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
-@Service
+@Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService{
 
 //    Inside this Fakestore is third party implementation.
@@ -37,7 +37,7 @@ public class FakeStoreProductService implements ProductService{
     }
 
     @Override
-    public Product createProduct(long id,  String title, String description, double price, String category, String imageUrl) {
+    public Product createProduct(long id,  String title, String description, double price, String category, String imageUrl) throws ProductNotFoundException {
         FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
         fakeStoreProductDto.setId(id);
         fakeStoreProductDto.setTitle(title);
@@ -48,7 +48,9 @@ public class FakeStoreProductService implements ProductService{
 
         FakeStoreProductDto response = restTemplate.postForObject("https://fakestoreapi.com/products",
                 fakeStoreProductDto, FakeStoreProductDto.class);
-        assert response != null;
+        if (response == null) {
+            throw new ProductNotFoundException("Failed to create product");
+        }
         return response.getProduct();
     }
 }

@@ -1,7 +1,6 @@
 package com.ecommerce.ecommerseproject.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.lang.NonNull;
 
 import com.ecommerce.ecommerseproject.models.Product;
 
@@ -14,5 +13,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Product findByTitle(String title);
 
     // This will insert the product record in table.
-    Product save(@NonNull Product product);
+    // save() method is inherited from JpaRepository
 }

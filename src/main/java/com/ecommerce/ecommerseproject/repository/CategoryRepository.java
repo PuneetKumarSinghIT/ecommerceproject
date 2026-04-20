@@ -1,8 +1,8 @@
 package com.ecommerce.ecommerseproject.repository;
 
-import org.springframework.lang.NonNull;
-import com.ecommerce.ecommerseproject.models.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.ecommerce.ecommerseproject.models.Category;
 
 public interface CategoryRepository extends JpaRepository<Category, Long> {
 
@@ -10,6 +10,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     Category findByTitle(String title);
 
     // This will insert the category record in table.
-    Category save(@NonNull Category category);
+    // save() method is inherited from JpaRepository
   
 }
