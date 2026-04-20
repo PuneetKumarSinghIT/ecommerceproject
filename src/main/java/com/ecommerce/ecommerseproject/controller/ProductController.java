@@ -4,6 +4,7 @@ import com.ecommerce.ecommerseproject.dto.ErrorDto;
 import com.ecommerce.ecommerseproject.exceptions.ProductNotFoundException;
 import com.ecommerce.ecommerseproject.models.Product;
 import com.ecommerce.ecommerseproject.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class ProductController {
 //    Need to interact with Service class.
     private ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(@Qualifier("selfProductService") ProductService productService) {
         this.productService = productService;
     }
 
